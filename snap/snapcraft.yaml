@@ -34,7 +34,7 @@ parts:
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
-      sed -e '1c#!/usr/bin/env python3' -i "${CRAFT_PART_INSTALL}/usr/bin/dialect"    
+      sed -e '1c#!/usr/bin/env python3' -i "${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect"    
     override-stage: |
       craftctl default
       sed -e 's|Icon=app.drey.Dialect|Icon=/usr/share/icons/hicolor/scalable/apps/app.drey.Dialect.svg|' -i usr/share/applications/app.drey.Dialect.desktop     
