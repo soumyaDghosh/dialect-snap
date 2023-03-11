@@ -11,7 +11,9 @@ contact: soumyadeepghosh2004@zohomail.in
 architectures:
   - build-on: amd64
     build-for: amd64
-
+environment:
+  # WORKAROUND: Add python modules in Snap to search path
+  PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 plugs:
   dialect-svc:
     bus: session
