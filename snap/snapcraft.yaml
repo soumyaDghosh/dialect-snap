@@ -25,7 +25,7 @@ parts:
     source: https://github.com/dialect-app/dialect.git
     source-tag: ${SNAPCRAFT_PROJECT_VERSION}
     meson-parameters:
-      - --prefix=/usr
+      - --prefix=/snap/dialect/current/usr
     build-packages:
       - blueprint-compiler
       - libgstreamer1.0-dev
@@ -38,6 +38,9 @@ parts:
     override-stage: |
       craftctl default
       sed -e 's|Icon=app.drey.Dialect|Icon=/usr/share/icons/hicolor/scalable/apps/app.drey.Dialect.svg|' -i usr/share/applications/app.drey.Dialect.desktop
+    organize:
+      # WORKAROUND: Move files from fake installation location to actual target
+      snap/dialect/current/usr: usr
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
   gtts:
     plugin: python
