@@ -27,6 +27,9 @@ parts:
       - --prefix=/usr
     build-packages:
       - blueprint-compiler
+      - libgstreamer1.0-dev
+    stage-packages:
+      - libgstreamer1.0-0
   gtts:
     plugin: python
     source: https://github.com/pndurette/gTTS.git
@@ -39,6 +42,7 @@ parts:
       - certifi
       - requests
       - click
+      - PyGObject
 apps:
   dialect:
     command: usr/bin/dialect
