@@ -73,19 +73,19 @@ parts:
       - click
       - PyGObject
   cleanup:
-  after:  # Make this part run last; list all your other parts here
-    - dialect
-    - gtts
-  plugin: nil
-  build-snaps:  # List all content-snaps and base snaps you're using here
-    - core22
-    - gnome-42-2204
-    - gnome-42-2204-sdk
-  override-prime: |
-    set -eux
-    for snap in "core22" "gnome-42-2204" "gnome-42-2204-sdk"; do  # List all content-snaps and base snaps you're using here
-        cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
-    done
+    after:  # Make this part run last; list all your other parts here
+      - dialect
+      - gtts
+    plugin: nil
+    build-snaps:  # List all content-snaps and base snaps you're using here
+      - core22
+      - gnome-42-2204
+      - gnome-42-2204-sdk
+    override-prime: |
+      set -eux
+      for snap in "core22" "gnome-42-2204" "gnome-42-2204-sdk"; do  # List all content-snaps and base snaps you're using here
+          cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
+      done
 apps:
   dialect:
     command: usr/bin/dialect
