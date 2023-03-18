@@ -47,10 +47,10 @@ parts:
     plugin: python
     source: https://github.com/pndurette/gTTS.git
     source-tag: v2.3.1
-    build-environment:
+    #build-environment:
       # WORKAROUND: The python plugin is broken with gnome extension
-      - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-      - PYTHONPATH: ""
+     # - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
+     # - PYTHONPATH: ""
     python-packages:
       - dbus-python
       - urllib3
