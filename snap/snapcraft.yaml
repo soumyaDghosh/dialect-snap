@@ -11,15 +11,21 @@ grade: stable
 contact: soumyadeepghosh2004@zohomail.in
 architectures:
   - build-on: amd64
-
 plugs:
   dialect-svc:
     bus: session
     interface: dbus
     name: app.drey.Dialect
+  etc:
+    interface: system-files
+    read:
+      - /etc/hosts
+      - /usr/share/ca-certificates/mozilla/GTS_Root_R1.crt
+environment:
+  # WORKAROUND: Add python modules in Snap to search path
+  PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${SNAP}/usr/lib/python3/dist-packages
 parts:
   dialect:
-    after: [gtts]
     # See 'snapcraft plugins'
     plugin: meson
     source: https://github.com/dialect-app/dialect.git
@@ -30,6 +36,7 @@ parts:
       - blueprint-compiler
       - libgstreamer1.0-dev
     stage-packages:
+      - python3-pip
       - python3-gst-1.0
       - libgstreamer1.0-0
     override-build: |
@@ -38,32 +45,16 @@ parts:
       sed -e '1c#!/usr/bin/env python3' -i "${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect"
     override-stage: |
       craftctl default
+      python3 -m pip install gTTs
+      python3 -m pip install PyGObject
       sed -e 's|Icon=app.drey.Dialect|Icon=/usr/share/icons/hicolor/scalable/apps/app.drey.Dialect.svg|' -i usr/share/applications/app.drey.Dialect.desktop
     organize:
       # WORKAROUND: Move files from fake installation location to actual target
       snap/dialect/current/usr: usr
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
-  gtts:
-    plugin: python
-    source: https://github.com/pndurette/gTTS.git
-    source-tag: v2.3.1
-    #build-environment:
-      # WORKAROUND: The python plugin is broken with gnome extension
-     # - PATH: ${CRAFT_PART_INSTALL}/bin:${PATH}
-     # - PYTHONPATH: ""
-    python-packages:
-      - dbus-python
-      - urllib3
-      - idna
-      - charset-normalizer
-      - certifi
-      - requests
-      - click
-      - PyGObject
   cleanup:
     after:  # Make this part run last; list all your other parts here
       - dialect
-      - gtts
     plugin: nil
     build-snaps:  # List all content-snaps and base snaps you're using here
       - core22
@@ -74,6 +65,11 @@ parts:
       for snap in "core22" "gnome-42-2204" "gnome-42-2204-sdk"; do  # List all content-snaps and base snaps you're using here
           cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
       done
+      rm -f usr/lib/x86_64-linux-gnu/libdw-0.188.so
+      rm -f usr/lib/x86_64-linux-gnu/libwayland-client.so.0.20.0
+      rm -f usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0.20.0
+      rm -f usr/lib/x86_64-linux-gnu/libwayland-egl.so.1.20.0
+      rm -f usr/lib/x86_64-linux-gnu/libwayland-server.so.0.20.0
 apps:
   dialect:
     command: usr/bin/dialect
@@ -81,7 +77,13 @@ apps:
     common-id: app.drey.Dialect
     desktop: usr/share/applications/app.drey.Dialect.desktop
     plugs:
-      - home
-      - network
+      - mount-observe
+      - process-control
       - network-status
       - dialect-svc
+      - audio-playback
+      - etc
+      - network
+      - network-bind
+      - netlink-audit
+      - netlink-connector
