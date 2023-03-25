@@ -15,10 +15,13 @@ description: |
 confinement: strict # use 'strict' once you have the right plugs and slots
 license: GPL-3.0+
 compression: lzo
+source-code: https://github.com/dialect-app/dialect
 grade: stable
 issues: https://github.com/soumyaDghosh/dialect-snap/issues
 website: https://github.com/soumyaDghosh/dialect-snap
 icon: app.drey.Dialect.svg
+type: app
+
 contact: soumyadeepghosh2004@zohomail.in
 architectures:
   - build-on: amd64
