@@ -51,6 +51,8 @@ parts:
       - libgstreamer1.0-dev
     stage-packages:
       - python3-pip
+      - python3-gi
+      - python3-langdetect
       - python3-gst-1.0
       - libgstreamer1.0-0
     override-build: |
@@ -59,8 +61,7 @@ parts:
       sed -e '1c#!/usr/bin/env python3' -i "${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect"
     override-stage: |
       craftctl default
-      python3 -m pip install gTTs
-      python3 -m pip install PyGObject
+      pip install --target=/root/parts/dialect/install/usr/lib/python3/dist-packages --ignore-installed gTTs
       sed -e 's|Icon=app.drey.Dialect|Icon=/usr/share/icons/hicolor/scalable/apps/app.drey.Dialect.svg|' -i usr/share/applications/app.drey.Dialect.desktop
     organize:
       # WORKAROUND: Move files from fake installation location to actual target
