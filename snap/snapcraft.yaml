@@ -8,6 +8,7 @@ confinement: strict # use 'strict' once you have the right plugs and slots
 license: GPL-3.0+
 compression: lzo
 grade: stable
+icon: https://github.com/dialect-app/dialect/blob/main/data/app.drey.Dialect.svg
 contact: soumyadeepghosh2004@zohomail.in
 architectures:
   - build-on: amd64
