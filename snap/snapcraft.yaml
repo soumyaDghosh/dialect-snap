@@ -16,10 +16,6 @@ contact: soumyadeepghosh2004@zohomail.in
 architectures:
   - build-on: amd64
 
-layout:
-  /usr/share/dialect:
-    bind: $SNAP/usr/share/dialect
-
 plugs:
   dialect-svc:
     bus: session
@@ -36,7 +32,7 @@ parts:
     source: https://github.com/dialect-app/dialect.git
     source-tag: ${SNAPCRAFT_PROJECT_VERSION}
     meson-parameters:
-      - --prefix=/usr
+      - --prefix=/snap/dialect/current/usr
     build-packages:
       - blueprint-compiler
       - libgstreamer1.0-dev
