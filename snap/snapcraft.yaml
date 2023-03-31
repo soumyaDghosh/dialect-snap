@@ -45,11 +45,11 @@ parts:
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
-      pip install --target=$CRAFT_PART_INSTALL/usr/lib/python3/dist-packages gTTs
+      pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages gTTs
       mkdir -p $CRAFT_PART_INSTALL/meta/gui
-      cp $CRAFT_PART_SRC/data/app.drey.Dialect.svg $CRAFT_PART_INSTALL/meta/gui/
-      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/usr/bin/dialect
-      sed -e 's|Icon=app.drey.Dialect|Icon=$SNAP/meta/gui/app.drey.Dialect.svg|' -i ${CRAFT_PART_INSTALL}/usr/share/applications/app.drey.Dialect.desktop
+      cp $CRAFT_PART_SRC/data/app.drey.Dialect.svg $CRAFT_PART_INSTALL/snap/dialect/current/meta/gui/
+      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect
+      sed -e 's|Icon=app.drey.Dialect|Icon=$SNAP/meta/gui/app.drey.Dialect.svg|' -i ${CRAFT_PART_INSTALL}/snap/dialect/current/usr/share/applications/app.drey.Dialect.desktop
     organize:
       # WORKAROUND: Move files from fake installation location to actual target
       snap/dialect/current/usr: usr
