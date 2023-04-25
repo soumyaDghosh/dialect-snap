@@ -17,9 +17,9 @@ architectures:
   - build-on: amd64
   - build-on: arm64
   - build-on: armhf
-
-plugs:
-  dialect-svc:
+#For GtkApplication registration
+slots:
+  dialect:
     bus: session
     interface: dbus
     name: app.drey.Dialect
