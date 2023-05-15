@@ -52,6 +52,8 @@ parts:
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
     prime:
       - -usr/share/doc
+      - -snap/dialect
+      - usr/*
 
   cleanup:
     after:  # Make this part run last; list all your other parts here
