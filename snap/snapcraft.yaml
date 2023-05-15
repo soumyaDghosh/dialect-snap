@@ -40,6 +40,7 @@ parts:
       - libgstreamer1.0-dev
     stage-packages:
       - python3-dbus
+      - python3-gst-1.0
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
