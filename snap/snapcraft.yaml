@@ -50,6 +50,8 @@ parts:
       # WORKAROUND: Move files from fake installation location to actual target
       snap/dialect/current/usr: usr
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
+    prime:
+      - -usr/share/doc
 
   cleanup:
     after:  # Make this part run last; list all your other parts here
@@ -58,9 +60,10 @@ parts:
     build-snaps:  # List all content-snaps and base snaps you're using here
       - core22
       - gnome-42-2204
+      - gtk-common-themes
     override-prime: |
       set -eux
-      for snap in "core22" "gnome-42-2204"; do  # List all content-snaps and base snaps you're using here
+      for snap in "core22" "gnome-42-2204" "gtk-common-themes"; do  # List all content-snaps and base snaps you're using here
           cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$SNAPCRAFT_PRIME/{}" \;
       done
 
