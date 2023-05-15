@@ -38,16 +38,13 @@ parts:
     build-packages:
       - blueprint-compiler
       - libgstreamer1.0-dev
-      - python3-pip
-    stage-packages:
-      - python3-gi
-      - python3-langdetect
-      - python3-gst-1.0
-      - libgstreamer1.0-0
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
+      mkdir $CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages
       pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages gTTs
+      pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages dbus-python
+      pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages 
       mkdir -p $CRAFT_PART_INSTALL/snap/dialect/current/meta/gui
       cp $CRAFT_PART_SRC/data/app.drey.Dialect.svg $CRAFT_PART_INSTALL/snap/dialect/current/meta/gui/
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect
