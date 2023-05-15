@@ -38,6 +38,7 @@ parts:
     build-packages:
       - blueprint-compiler
       - libgstreamer1.0-dev
+      - libpython3.10-dev
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
