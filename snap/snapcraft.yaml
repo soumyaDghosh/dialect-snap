@@ -41,7 +41,7 @@ parts:
     override-build: |
       craftctl default
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
-      mkdir $CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages
+      #mkdir $CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages
       pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages gTTs
       pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages dbus-python
       pip install --target=$CRAFT_PART_INSTALL/snap/dialect/current/usr/lib/python3/dist-packages 
