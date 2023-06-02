@@ -49,6 +49,12 @@ parts:
       snap/dialect/current/usr: usr
       usr/local: usr
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
+    prime:
+      - -snap/dialect
+      - -usr/include
+      - -usr/bin/normalizer
+      - -usr/bin/gtts-cli
+      - -usr/share/doc
     
 
   cleanup:
