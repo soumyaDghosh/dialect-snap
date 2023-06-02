@@ -50,13 +50,14 @@ parts:
       usr/local: usr
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
     prime:
+      - -lib
       - -snap/dialect
       - -usr/include
       - -usr/bin/normalizer
       - -usr/bin/gtts-cli
       - -usr/share/doc
-    
-
+      - -usr/share/gnome-shell
+      
   cleanup:
     after:  # Make this part run last; list all your other parts here
       - dialect
