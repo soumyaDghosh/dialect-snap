@@ -39,6 +39,7 @@ parts:
       - blueprint-compiler
       - libgstreamer1.0-dev
       - libpython3.10-dev
+      - patchelf
     stage-packages:
       - gir1.2-gstreamer-1.0
     override-build: |
