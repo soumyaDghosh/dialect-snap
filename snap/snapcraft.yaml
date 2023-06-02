@@ -22,10 +22,6 @@ slots:
     bus: session
     interface: dbus
     name: app.drey.Dialect
-  dialect-search:
-    bus: session
-    interface: dbus
-    name: app.drey.Dialect.SearchProvider
 
 parts:
   dialect:
