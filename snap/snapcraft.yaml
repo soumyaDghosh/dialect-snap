@@ -33,26 +33,36 @@ parts:
     build-packages:
       - blueprint-compiler
       - libgstreamer1.0-dev
-      - libpython3.10-dev
-      - patchelf
     stage-packages:
+      - python3-dbus
       - gir1.2-gstreamer-1.0
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/dialect.patch
     override-build: |
       craftctl default
       pip install --prefix=$CRAFT_PART_INSTALL/usr gTTs     
-      pip install --prefix=$CRAFT_PART_INSTALL/usr dbus-python 
       # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect
       sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+    override-prime: |
+      craftctl default
+      mkdir -p meta/gui
+      cp -r snap/dialect/current/usr/share/icons meta/gui/
+      for i in `find meta/gui/icons -name "*.svg" -o -name "*.png"`; do
+        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
+      done
     organize:
       # WORKAROUND: Move files from fake installation location to actual target
       snap/dialect/current/usr: usr
       usr/local: usr
+      usr/lib/python3/dist-packages: usr/lib/python3.10/dist-packages
     parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
     prime:
       - -lib
       - -snap/dialect
       - -usr/include
+      - -usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer*
       - -usr/bin/normalizer
       - -usr/bin/gtts-cli
       - -usr/share/doc
