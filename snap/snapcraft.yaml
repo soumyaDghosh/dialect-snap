@@ -28,6 +28,7 @@ parts:
     plugin: meson
     source: https://github.com/dialect-app/dialect.git
     source-tag: '2.1.1'
+    source-depth: 1
     meson-parameters:
       - --prefix=/snap/dialect/current/usr
     build-packages:
