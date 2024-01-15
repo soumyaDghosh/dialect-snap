@@ -31,8 +31,9 @@ parts:
     source-depth: 1
     meson-parameters:
       - --prefix=/snap/dialect/current/usr
-    build-packages:
+    build-snaps:
       - blueprint-compiler
+    build-packages:
       - libgstreamer1.0-dev
     stage-packages:
       - python3-dbus
