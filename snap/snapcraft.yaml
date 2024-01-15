@@ -13,7 +13,7 @@ contact: soumyadeepghosh2004@zohomail.in
 
 architectures:
   - build-on: amd64
-  - build-on: arm64
+  #- build-on: arm64
 
 #For GtkApplication registration
 slots:
@@ -23,6 +23,16 @@ slots:
     name: app.drey.Dialect
 
 parts:
+  python-deps:
+    source: .
+    plugin: python
+    python-packages:
+      - gTTs==2.2.3
+      - beautifulsoup4==4.12.2
+    prime:
+      - -bin
+      - -include
+      - -lib64
   dialect:
     # See 'snapcraft plugins'
     plugin: meson
@@ -30,7 +40,7 @@ parts:
     source-tag: '2.2.0'
     source-depth: 1
     meson-parameters:
-      - --prefix=/snap/dialect/current/usr
+      - --prefix=/snap/dialect/current/
     build-snaps:
       - blueprint-compiler
     build-packages:
@@ -42,32 +52,22 @@ parts:
       craftctl default
       patch -p1 < $CRAFT_PROJECT_DIR/dialect.patch
     override-build: |
-      craftctl default
-      pip install --prefix=$CRAFT_PART_INSTALL/usr gTTs     
-      # WORKAROUND: Use python from search path, the path detected by meson doesn't exist when running the Snap
+      craftctl default    
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/dialect/current/usr/bin/dialect
-      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
       mkdir -p $CRAFT_PART_INSTALL/meta/gui
-      cp -r $CRAFT_PART_INSTALL/snap/dialect/current/usr/share/icons $CRAFT_PART_INSTALL/meta/gui/
+      cp -r $CRAFT_PART_INSTALL/snap/dialect/current/share/icons $CRAFT_PART_INSTALL/meta/gui/
       for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
         mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
       done
     organize:
       # WORKAROUND: Move files from fake installation location to actual target
-      snap/dialect/current/usr: usr
-      usr/local: usr
-      usr/lib/python3/dist-packages: usr/lib/python3.10/dist-packages
-    parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
+      snap/dialect/current/: .
+      usr: .
+    parse-info: [share/metainfo/app.drey.Dialect.metainfo.xml]
     prime:
-      - -lib
       - -snap/dialect
-      - -usr/include
-      - -usr/lib/python3
-      - -usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer*
-      - -usr/bin/normalizer
-      - -usr/bin/gtts-cli
-      - -usr/share/doc
-      - -usr/share/gnome-shell
+      - -lib/$CRAFT_ARCH_TRIPLET/gstreamer*
+      - -share/gnome-shell
 
   cleanup:
     after:  # Make this part run last; list all your other parts here
