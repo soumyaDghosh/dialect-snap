@@ -59,8 +59,8 @@ parts:
         mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
       done
     organize:
-      snap/dialect/current/usr: .
-    parse-info: [share/metainfo/app.drey.Dialect.metainfo.xml]
+      snap/dialect/current: .
+    parse-info: [usr/share/metainfo/app.drey.Dialect.metainfo.xml]
     prime:
       - -snap/dialect
       - -usr/share/gnome-shell
